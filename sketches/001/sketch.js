@@ -1,68 +1,104 @@
-let system;
+/******************
+Code by Vamoss
+Original code link:
+https://openprocessing.org/sketch/1602827
+
+Author links:
+http://vamoss.com.br
+http://twitter.com/vamoss
+http://github.com/vamoss
+******************/
+
+//Inspired by Casey Reas sketch on class Volume 01: elements of reactive form
+//Available at https://acg.media.mit.edu/concepts/volume01.html
+
+var client
+
+const pixelation = 3;
+var redinhas = [];
+var graphic;
+var pixelShader;
 
 function setup() {
-  createCanvas(windowWidth, windowHeight);
-  system = new ParticleSystem(createVector(width / 2, 50));
+	var canvas = createCanvas(windowWidth, windowHeight, WEBGL);
+	
+	graphic = createGraphics(width, height);
+	graphic.strokeWeight(3);
+	
+	pixelShader = new p5.Shader(canvas._renderer, vert, frag);
+	
+	client = mqtt.connect("wss://test.mosquitto.org:8081")
+  	client.subscribe("mqtt/p5js", function (err) {
+		console.log("mqtt subscribed");
+		if(err) console.error(err);
+  })
+	
+	client.on('connect', function (connack) {
+		console.log("mqtt connected", connack.sessionPresent)
+	})
+	
+	client.on("message", function (topic, payload) {
+		//console.log(topic, payload.toString())
+		var m = JSON.parse(payload.toString());
+		criaRede(m.x * width, m.y * height, m.w, m.h, m.phase, m.vel, m.space, m.definition);
+  })
 }
 
 function draw() {
-  background(51);
-  system.addParticle();
-  system.run();
+	graphic.background(0);
+	graphic.stroke(0, 200, 255);
+
+	redinhas.forEach(r => {
+		r.phase += r.vel;
+		r.y += r.vel * 100;
+		var h = r.h + sin(r.phase*3)*40;
+		if(r.y > height+r.h*4){
+			r.y = -r.h*2.5;
+		}else	if(r.y < -r.h*4){
+			r.y = height+r.h*4;
+		}
+		redinha(r.x, r.y, r.w, h, r.phase, r.space, r.definition);
+	})
+
+	shader(pixelShader);
+	pixelShader.setUniform("steps", [floor(width/pixelation), floor(height/pixelation)]);
+	pixelShader.setUniform("tex", graphic);
+	rect(0, 0, width, height);
 }
 
-function windowResized() {
-  resizeCanvas(windowWidth, windowHeight);
+function mousePressed(){
+	var s = random(0.2, 1);
+	var vel = 0;
+	while(abs(vel) < 0.001){
+		vel = random(-0.01, 0.01);
+	}
+	var x = mouseX/width;
+	var y = mouseY/height;
+	var phase = random(TWO_PI);
+	var w = random(100, 200) * s;
+	var h = random(50, 100) * s;
+	var space = random(100, 200) * s;
+	var definition = floor(random(20, 80) * s);
+	sendShape(x, y, w, h, phase, vel, space, definition)
 }
 
-// A simple Particle class
-let Particle = function(position) {
-  this.acceleration = createVector(0, 0.05);
-  this.velocity = createVector(random(-1, 1), random(-1, 0));
-  this.position = position.copy();
-  this.lifespan = 255;
-};
+function sendShape(x, y, w, h, phase, vel, space, definition){
+	var message = {x, y, w, h, phase, vel, space, definition};	
+	client.publish("mqtt/p5js", JSON.stringify(message))
+}
 
-Particle.prototype.run = function() {
-  this.update();
-  this.display();
-};
+function criaRede(x, y, w, h, phase, vel, space, definition){	
+	redinhas.push({x, y, w, h, phase, vel, space, definition});
+}
 
-// Method to update position
-Particle.prototype.update = function(){
-  this.velocity.add(this.acceleration);
-  this.position.add(this.velocity);
-  this.lifespan -= 2;
-};
-
-// Method to display
-Particle.prototype.display = function() {
-  stroke(200, this.lifespan);
-  strokeWeight(2);
-  fill(127, this.lifespan);
-  ellipse(this.position.x, this.position.y, 12, 12);
-};
-
-// Is the particle still useful?
-Particle.prototype.isDead = function(){
-  return this.lifespan < 0;
-};
-
-let ParticleSystem = function(position) {
-  this.origin = position.copy();
-  this.particles = [];
-};
-
-ParticleSystem.prototype.addParticle = function() {
-  this.particles.push(new Particle(this.origin));
-};
-
-ParticleSystem.prototype.run = function() {
-  for (let i = this.particles.length-1; i >= 0; i--) {
-    let p = this.particles[i];
-    p.run();
-    if (p.isDead()) {
-      this.particles.splice(i, 1);
-    }
-  }
-};
+function redinha(x, y, w, h, phase, space, definition){
+	for(var a = 0; a < TWO_PI; a += TWO_PI/definition){
+		var x1 = cos(a + phase) * w + x;
+		var y1 = sin(a + phase) * h + y - space;
+		
+		var x2 = cos(a - phase) * w + x;
+		var y2 = sin(a - phase) * h + y + space;
+		
+		graphic.line(x1, y1, x2, y2);
+	}
+}
