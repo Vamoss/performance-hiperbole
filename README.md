@@ -9,7 +9,7 @@ Estruturada sobre os eixos arte, hibridação, biotelemática e transculturalida
 ## Como funciona
 
 - A performance acontece a partir de imagens geradas por sketches. 
- Os sketches são experimentos criados a partir da manipulação de códigos de computador. 
+- Os sketches são experimentos criados a partir da manipulação de códigos de computador. 
 - As imagens geradas pelos sketches serão incorporadas a uma obra coletiva que será projetada durante a exposição no Museu Nacional da República. 
 - Alguns sketches permitem interação, e  interferências nas imagens que serão projetadas.
 
