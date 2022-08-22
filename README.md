@@ -35,23 +35,23 @@ Links úteis:
 Lista de modelos para se inspirar e contribuir com sua criação:
 
 1. p5js com interatividade multi-usuário (MQTT)
-   - [Hiperbolas](https://vamoss.github.io/performance-hiperbole/sketches/001/)
-   - [Código-fonte](https://github.com/Vamoss/performance-hiperbole/tree/main/sketches/001)
+   - [Hiperbolas](https://vamoss.github.io/performance-hiperbole/templates/001/)
+   - [Código-fonte](https://github.com/Vamoss/performance-hiperbole/tree/main/templates/001)
 2. p5js sem interatividade
-   - [Particulas](https://vamoss.github.io/performance-hiperbole/sketches/002/)
-   - [Código-fonte](https://github.com/Vamoss/performance-hiperbole/tree/main/sketches/002)
+   - [Particulas](https://vamoss.github.io/performance-hiperbole/templates/002/)
+   - [Código-fonte](https://github.com/Vamoss/performance-hiperbole/tree/main/templates/002)
 3. p5js com interatividade não multi-usuário
-   - [Flock](https://vamoss.github.io/performance-hiperbole/sketches/003/)
-   - [Código-fonte](https://github.com/Vamoss/performance-hiperbole/tree/main/sketches/003)
+   - [Flock](https://vamoss.github.io/performance-hiperbole/templates/003/)
+   - [Código-fonte](https://github.com/Vamoss/performance-hiperbole/tree/main/templates/003)
 4. p5js sem interatividade utilizando uma imagem
-   - [Dotting](https://vamoss.github.io/performance-hiperbole/sketches/004/)
-   - [Código-fonte](https://github.com/Vamoss/performance-hiperbole/tree/main/sketches/004)
+   - [Dotting](https://vamoss.github.io/performance-hiperbole/templates/004/)
+   - [Código-fonte](https://github.com/Vamoss/performance-hiperbole/tree/main/templates/004)
 5. p5js sem interatividade utilizando uma imagem
-   - [3D Geometries](https://vamoss.github.io/performance-hiperbole/sketches/005//dist)
-   - [Código-fonte](https://github.com/Vamoss/performance-hiperbole/tree/main/sketches/005)
+   - [3D Geometries](https://vamoss.github.io/performance-hiperbole/templates/005//dist)
+   - [Código-fonte](https://github.com/Vamoss/performance-hiperbole/tree/main/templates/005)
 6. p5js com interatividade multi-usuário (MQTT) utilizando webpack
-   - [Desenho coletivo](https://vamoss.github.io/performance-hiperbole/sketches/006/dist)
-   - [Código-fonte](https://github.com/Vamoss/performance-hiperbole/tree/main/sketches/006)
+   - [Desenho coletivo](https://vamoss.github.io/performance-hiperbole/templates/006/dist)
+   - [Código-fonte](https://github.com/Vamoss/performance-hiperbole/tree/main/templates/006)
 7. p5js com interatividade multi-usuário (MQTT)
-   - [Desenho coletivo](https://vamoss.github.io/performance-hiperbole/sketches/007)
-   - [Código-fonte](https://github.com/Vamoss/performance-hiperbole/tree/main/sketches/007)
+   - [Desenho coletivo](https://vamoss.github.io/performance-hiperbole/templates/007)
+   - [Código-fonte](https://github.com/Vamoss/performance-hiperbole/tree/main/templates/007)
