@@ -16,7 +16,7 @@ var hg = [];
 var distCenter = 10000;
 var prefx = 0;
 
-var mf = 1;
+var mf = 2;
 
 
 var animThresh1 = 80, animThresh2 = 100;
@@ -37,6 +37,7 @@ function setup() {
   }
 
   
+  frameCount = 0;
   noiseSeed(09092022);
 
   frameRate(30);
@@ -62,7 +63,7 @@ function setup() {
 
 
   let minDim = width;
-  fsz = 0.123*minDim - 10.154;
+  fsz = 0.05*minDim - 10.154;
   let dlfsz = 2*fsz + 14.25;
   if(dlfsz > height) {
     fsz = (height - 14.5)/2.1;
@@ -150,47 +151,49 @@ function draw() {
       image(o1, 0, 0);
 
       if(mf != 0) {
-        let frase = data.estado;
-        // fsz = 92;
-        o4 = createGraphics(width, height);
-        o4.background(0,0,0,0);
-        o4.textFont(myFont);
-        o4.textAlign(CENTER, CENTER);
-        o4.textSize(fsz);
-        o4.noFill();
-        o4.stroke(255);
-        o4.strokeWeight(10);
-        o4.text(frase, width/2 - 0.0*textWidth(frase.split("\n")[0]), height/2);
-        if(mf == 1) {
-          o4.strokeWeight(fbsz);
-          o4.stroke(0);
+        
+        if(frameCount<2){
+          let frase = data.estado;
+          // fsz = 92;
+          o4 = createGraphics(width, height);
+          o4.background(0,0,0,0);
+          o4.textFont(myFont);
+          o4.textAlign(CENTER, CENTER);
+          o4.textSize(fsz);
+          o4.noFill();
+          o4.stroke(255);
+          o4.strokeWeight(10);
           o4.text(frase, width/2 - 0.0*textWidth(frase.split("\n")[0]), height/2);
-        }
-        image(o4,0,0);
+          if(mf == 1) {
+            o4.strokeWeight(fbsz);
+            o4.stroke(0);
+            o4.text(frase, width/2 - 0.0*textWidth(frase.split("\n")[0]), height/2);
+          }
+          image(o4,0,0);
 
-        if(mf == 2) {
-          o2 = createGraphics(width, height);
-          o2.background(0,0);
-          o2.textFont(myFont);
-          o2.textAlign(CENTER, CENTER);
-          textSize(fsz);
-          o2.textSize(fsz);
-          o2.fill(255);
-          o2.text(frase, width/2 - 0.0*textWidth(frase.split("\n")[0]), height/2);
-          blend(o2,0,0,width,height,0,0,width,height, DIFFERENCE);
+          if(mf == 2) {
+            o2 = createGraphics(width, height);
+            o2.background(0,0);
+            o2.textFont(myFont);
+            o2.textAlign(CENTER, CENTER);
+            textSize(fsz);
+            o2.textSize(fsz);
+            o2.fill(255);
+            o2.text(frase, width/2 - 0.0*textWidth(frase.split("\n")[0]), height/2);
+            blend(o2,0,0,width,height,0,0,width,height, DIFFERENCE);
+          }
         }
-
 
       }
 
 
     } 
   }
-  else {
+  /*else {
     if(mfc > animThresh2) {
       setup();
     }
-  }
+  }*/
 
   mfc++;
   // noLoop();

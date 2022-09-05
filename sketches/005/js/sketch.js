@@ -97,7 +97,7 @@ function drawGrid() {
     let w = r.width * grid_spacing_x ;
     let h = r.height * grid_spacing_y ;
 
-    let gradient = drawingContext.createConicGradient((frameCount/100 + (r.random_ref * TWO_PI) % TWO_PI), x, y );
+    let gradient = drawingContext.createConicGradient((frameCount/300 + (r.random_ref * TWO_PI) % TWO_PI), x, y );
     for(let i = 0; i < r.gradient_stops.length; i++) {
       let c = r.gradient_stops[i];
       let h = (frameCount*3*r.random_ref + c.hsl[0] + (r.random_ref * 360)) % 360;

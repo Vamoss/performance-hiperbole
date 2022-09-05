@@ -22,8 +22,8 @@ function preload() {
 }
 
 function setup() {
-  createCanvas(900, 900);
-  background(255);
+  createCanvas(windowWidth, windowHeight);
+  background(0);
   noStroke();
   largpena = 50;
   //torna cada lista de pontos uma lista de vetores e então adiciona esta lista para a lista de vetores listaV
@@ -47,8 +47,9 @@ function draw() {
   } else if (o > 10) {
     o = 0;
   }
-  fill(255, o);
+  fill(0, o);
   rect(-10, -10, width + 10, height + 10);
+  translate((width-900)/2, 0);
   //itera pela lista de vetores e, para cada item desta lista, recupera os vetores e desenha o traço na tela com eles
   for (let i = 0; i < listaV.length; i++) {
     if (iterators[i] < listaV[i].length - 3) {

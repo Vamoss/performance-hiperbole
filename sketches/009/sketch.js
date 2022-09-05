@@ -1,7 +1,7 @@
 let sig = 1;
 
 function setup() {
-  createCanvas(800, 600);
+  createCanvas(windowWidth, windowHeight);
   background(0,0,0);
   strokeWeight(1);
   frameRate(60);    
