@@ -5,6 +5,8 @@ var time = 0;
 
 var colors = []; 
 
+var client;
+
 function setup(){
 	createCanvas(windowWidth, windowHeight);
 	background(255,20,0);
@@ -14,6 +16,24 @@ function setup(){
   colors.push("#ff200420");
   colors.push("#ff252625");
   colors.push("#ff023059");
+
+  client = mqtt.connect("wss://test.mosquitto.org:8081")
+  	client.subscribe("mqtt/p5js", function (err) {
+		console.log("mqtt subscribed");
+		if(err) console.error(err);
+  })
+	
+	client.on('connect', function (connack) {
+		console.log("mqtt connected", connack.sessionPresent)
+	})
+	
+	client.on("message", function (topic, payload) {
+		//console.log(topic, payload.toString())
+		var m = JSON.parse(payload.toString());
+		mouseX = random(width);
+		mouseY = random(height);
+		particles.push(new Particle(mouseX, mouseY, random(1, 5)));
+  })
 }
 
 function draw(){
