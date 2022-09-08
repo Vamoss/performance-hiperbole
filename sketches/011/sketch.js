@@ -7,6 +7,8 @@ var dir = 1;
 var radius = 5;
 var angle = 0;
 
+var client;
+
 function preload(){
   img = loadImage("abelha.gif");
 }
@@ -17,6 +19,22 @@ function setup() {
 
   flock = new Flock();
   pos = {x: width/2, y: height/2};
+
+  client = mqtt.connect("wss://test.mosquitto.org:8081")
+  	client.subscribe("mqtt/p5js", function (err) {
+		console.log("mqtt subscribed");
+		if(err) console.error(err);
+  })
+	
+	client.on('connect', function (connack) {
+		console.log("mqtt connected", connack.sessionPresent)
+	})
+	
+	client.on("message", function (topic, payload) {
+		//console.log(topic, payload.toString())
+		var m = JSON.parse(payload.toString());
+    flock.addBoid(new Boid(pos.x, pos.y));
+  })
 }
 
 function draw() {
@@ -31,8 +49,6 @@ function draw() {
 		if(random() < 0.05) dir *= -1;
 		if(random() < 0.05) radius = random(5, 8);
 	}
-
-	flock.addBoid(new Boid(pos.x, pos.y));
 
 	clear();
 	flock.run();
@@ -156,7 +172,7 @@ Boid.prototype.render = function() {
   vertex(this.r, this.r * 2);
   endShape(CLOSE);
   pop();*/
-  var TAM = this.life / 200 * 30;
+  var TAM = this.life / 200 * 50;
   image(img, this.position.x, this.position.y, TAM, TAM);
 }
 

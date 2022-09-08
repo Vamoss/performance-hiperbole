@@ -4,6 +4,10 @@ html {
   line-height: 1.4;
 }
 
+html, body{
+  background-color: black;
+}
+
 .container{
   margin: 0px auto;
   text-align: center;

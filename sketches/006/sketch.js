@@ -1,9 +1,26 @@
 
 var circles = []
+var client
 
 function setup() {
 	createCanvas(windowWidth,windowHeight);
 	background(255);
+
+	client = mqtt.connect("wss://test.mosquitto.org:8081")
+	client.subscribe("mqtt/p5js", function (err) {
+		console.log("mqtt subscribed");
+		if(err) console.error(err);
+	})
+	
+	client.on('connect', function (connack) {
+		console.log("mqtt connected", connack.sessionPresent)
+	})
+	
+	client.on("message", function (topic, payload) {
+		//console.log(topic, payload.toString())
+		var m = JSON.parse(payload.toString());
+		addCircle(width/2, height/2, 15, random(TWO_PI));
+  })
 }
 
 function addCircle(x, y, life, followAngle){
@@ -21,7 +38,7 @@ function addCircle(x, y, life, followAngle){
 
 function draw() {
 	if(circles.length == 0){
-		addCircle(width/2, height/2, 18, random(TWO_PI));
+	
 		fill (0, 40);
 		noStroke();
 		rect(0, 0, width, height);

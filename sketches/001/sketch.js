@@ -39,8 +39,13 @@ function setup() {
 	
 	client.on("message", function (topic, payload) {
 		//console.log(topic, payload.toString())
-		var m = JSON.parse(payload.toString());
-		criaRede(m.x * width, m.y * height, m.w, m.h, m.phase, m.vel, m.space, m.definition);
+
+		mouseX = random(width);
+		mouseY = random(height);
+		mousePressed();
+		
+		//var m = JSON.parse(payload.toString());
+		//criaRede(m.x * width, m.y * height, m.w, m.h, m.phase, m.vel, m.space, m.definition);
   })
 }
 
@@ -72,14 +77,15 @@ function mousePressed(){
 	while(abs(vel) < 0.001){
 		vel = random(-0.01, 0.01);
 	}
-	var x = mouseX/width;
-	var y = mouseY/height;
+	var x = mouseX;
+	var y = mouseY;
 	var phase = random(TWO_PI);
 	var w = random(100, 200) * s;
 	var h = random(50, 100) * s;
 	var space = random(100, 200) * s;
 	var definition = floor(random(20, 80) * s);
-	sendShape(x, y, w, h, phase, vel, space, definition)
+	redinhas.push({x, y, w, h, phase, vel, space, definition});
+	//sendShape(x, y, w, h, phase, vel, space, definition)
 }
 
 function sendShape(x, y, w, h, phase, vel, space, definition){
